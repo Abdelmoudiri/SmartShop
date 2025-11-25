@@ -2,7 +2,7 @@ package com.SmartShop.SmartShop.entities.enums;
 
 
 
-public enum Role {
+public enum UserRole {
     ADMIN,
     CLIENT
 }
