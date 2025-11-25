@@ -1,0 +1,66 @@
+package com.SmartShop.SmartShop.entities;
+
+import com.SmartShop.SmartShop.entities.enums.OrderStatus;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@Table(name = "orders") // "order" est un mot réservé SQL, donc on met "orders"
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
+
+public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @CreationTimestamp
+    private LocalDateTime date;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private OrderStatus status = OrderStatus.PENDING;
+
+    // --- Données financières (Snapshot) ---
+    // On stocke les valeurs calculées pour figer l'historique
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal sousTotal; // Avant remises
+
+    private int remisePercentage; // Remise Fidélité appliquée (ex: 5, 10, 15)
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal montantRemise; // Valeur en DH de la remise totale (Fidélité + Promo)
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal tva; // 20%
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal total; // TTC Final
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal montantRestant; // Reste à payer (pour paiements fractionnés)
+
+    // Code promo utilisé (optionnel)
+    @ManyToOne
+    @JoinColumn(name = "promo_code_id")
+    private PromoCode promoCode;
+
+    // Relation vers les lignes de commande
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> items;
+
+    // Relation vers les paiements
+    @OneToMany(mappedBy = "order")
+    private List<Payment> payments;
+
+}
