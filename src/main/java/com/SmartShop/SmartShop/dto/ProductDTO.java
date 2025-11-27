@@ -22,6 +22,17 @@ public class ProductDTO {
     }
 
     @Data @Builder @NoArgsConstructor @AllArgsConstructor
+    public static class UpdateRequest {
+        private String nom;
+
+        @Positive(message = "Le prix doit être positif")
+        private BigDecimal prixUnitaire;
+
+        @Min(value = 0, message = "Le stock ne peut pas être négatif")
+        private Integer stock;
+    }
+
+    @Data @Builder @NoArgsConstructor @AllArgsConstructor
     public static class Response {
         private Long id;
         private String nom;
