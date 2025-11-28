@@ -7,8 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.Mapping;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -37,6 +38,19 @@ public class Client {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private CustomerTier fidelite=CustomerTier.BASIC;
+
+    // Statistiques automatiques pour le système de fidélité
+    @Column(nullable = false)
+    @Builder.Default
+    private Integer totalOrders = 0; // Nombre total de commandes CONFIRMED
+
+    @Column(nullable = false, precision = 12, scale = 2)
+    @Builder.Default
+    private BigDecimal totalSpent = BigDecimal.ZERO; // Montant cumulé des commandes CONFIRMED
+
+    private LocalDateTime firstOrderDate; // Date de la première commande
+
+    private LocalDateTime lastOrderDate; // Date de la dernière commande
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
