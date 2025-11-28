@@ -21,7 +21,7 @@ public class Payment {
     private Order order;
 
     @Column(nullable = false)
-    private String numeroPaiement; // Ex: PAY-ORD1-01
+    private String numeroPaiement;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal montant;
@@ -34,13 +34,13 @@ public class Payment {
     @Builder.Default
     private PaymentStatus statut = PaymentStatus.EN_ATTENTE;
 
-    private LocalDate datePaiement; // Date déclarée
+    private LocalDate datePaiement;
 
-    private LocalDate dateEncaissement; // Date effective (Validation admin)
+    private LocalDate dateEncaissement;
 
-    private LocalDate dateEcheance; // Pour chèques/effets
+    private LocalDate dateEcheance;
 
-    private String banque; // Optionnel (Pour chèque/virement)
+    private String banque;
 
-    private String reference; // Numéro de chèque ou ref virement
+    private String reference;
 }
