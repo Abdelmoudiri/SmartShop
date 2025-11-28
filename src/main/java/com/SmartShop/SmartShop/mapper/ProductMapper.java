@@ -5,7 +5,7 @@ import com.SmartShop.SmartShop.entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring") // Permet l'injection via @Autowired
+@Mapper(componentModel = "spring")
 public interface ProductMapper {
 
     @Mapping(target = "id", ignore = true)
