@@ -30,36 +30,31 @@ public class Order {
     @Builder.Default
     private OrderStatus status = OrderStatus.PENDING;
 
-    // --- Données financières (Snapshot) ---
-    // On stocke les valeurs calculées pour figer l'historique
 
     @Column(precision = 10, scale = 2)
-    private BigDecimal sousTotal; // Avant remises
+    private BigDecimal sousTotal;
 
-    private int remisePercentage; // Remise Fidélité appliquée (ex: 5, 10, 15)
-
-    @Column(precision = 10, scale = 2)
-    private BigDecimal montantRemise; // Valeur en DH de la remise totale (Fidélité + Promo)
+    private int remisePercentage;
 
     @Column(precision = 10, scale = 2)
-    private BigDecimal tva; // 20%
+    private BigDecimal montantRemise;
 
     @Column(precision = 10, scale = 2)
-    private BigDecimal total; // TTC Final
+    private BigDecimal tva;
 
     @Column(precision = 10, scale = 2)
-    private BigDecimal montantRestant; // Reste à payer (pour paiements fractionnés)
+    private BigDecimal total;
 
-    // Code promo utilisé (optionnel)
+    @Column(precision = 10, scale = 2)
+    private BigDecimal montantRestant;
+
     @ManyToOne
     @JoinColumn(name = "promo_code_id")
     private PromoCode promoCode;
 
-    // Relation vers les lignes de commande
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items;
 
-    // Relation vers les paiements
     @OneToMany(mappedBy = "order")
     private List<Payment> payments;
 
