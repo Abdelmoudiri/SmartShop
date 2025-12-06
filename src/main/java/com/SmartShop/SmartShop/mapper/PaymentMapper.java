@@ -16,5 +16,7 @@ public interface PaymentMapper {
     @Mapping(target = "dateEncaissement", ignore = true)
     Payment toEntity(PaymentDTO.CreateRequest request);
 
+    @Mapping(target = "typePaiement", expression = "java(payment.getTypePaiement().name())")
+    @Mapping(target = "statut", expression = "java(payment.getStatut().name())")
     PaymentDTO.Response toResponse(Payment payment);
 }
