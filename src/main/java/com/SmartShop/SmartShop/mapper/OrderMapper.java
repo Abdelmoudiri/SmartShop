@@ -12,6 +12,8 @@ public interface OrderMapper {
     @Mapping(source = "client.nom", target = "clientNom")
     @Mapping(source = "promoCode.code", target = "codePromoApplique")
     @Mapping(source = "total", target = "totalTTC")
+    @Mapping(source = "remisePercentage", target = "remiseFidelitePercentage")
+    @Mapping(target = "status", expression = "java(order.getStatus().name())")
     OrderDTO.Response toResponse(Order order);
 
     @Mapping(source = "product.id", target = "productId")
