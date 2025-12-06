@@ -1,5 +1,6 @@
 package com.SmartShop.SmartShop.dto;
 
+import com.SmartShop.SmartShop.entities.Client;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
