@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 public interface UserMapper {
 
    User toEntity(AuthDTO.RegisterRequest request);
+
    AuthDTO.RegisterRequest toResponse(User user);
+   AuthDTO.UserInfoResponse toDto(User  user);
 
 }
