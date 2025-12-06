@@ -11,9 +11,7 @@ import com.SmartShop.SmartShop.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-/**
- * Service centralisé pour gérer les autorisations et les vérifications de permissions
- */
+
 @Service
 @RequiredArgsConstructor
 public class AuthorizationService {
@@ -67,7 +65,7 @@ public class AuthorizationService {
             throw new BusinessException("L'utilisateur actuel n'est pas un client");
         }
         
-        return clientRepository.findByUserId(currentUser.getId())
+        return clientRepository.findByUserId(currentUser.getClientDetails().getId())
             .orElseThrow(() -> new BusinessException("Aucun profil client associé à cet utilisateur"));
     }
 

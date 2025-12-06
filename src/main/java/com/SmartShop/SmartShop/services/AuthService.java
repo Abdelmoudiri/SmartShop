@@ -2,6 +2,7 @@ package com.SmartShop.SmartShop.services;
 
 import com.SmartShop.SmartShop.dto.AuthDTO;
 import com.SmartShop.SmartShop.entities.User;
+import com.SmartShop.SmartShop.entities.enums.UserRole;
 import com.SmartShop.SmartShop.exceptions.BusinessException;
 import com.SmartShop.SmartShop.exceptions.ResourceNotFoundException;
 import com.SmartShop.SmartShop.repositories.UserRepository;
@@ -37,7 +38,7 @@ public class AuthService {
       user.setUsername(request.getUsername());
       user.setPassword(PasswordUtil.hashPassword(request.getPassword()));
       
-      user.setRole(request.getRole() != null ? request.getRole() : com.SmartShop.SmartShop.entities.enums.UserRole.CLIENT);
+      user.setRole(request.getRole() != null ? request.getRole() : UserRole.CLIENT);
 
       return userRepository.save(user);
   }
