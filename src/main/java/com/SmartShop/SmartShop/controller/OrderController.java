@@ -1,10 +1,14 @@
 package com.SmartShop.SmartShop.controller;
 
 import com.SmartShop.SmartShop.dto.OrderDTO;
+import com.SmartShop.SmartShop.dto.PaymentDTO;
 import com.SmartShop.SmartShop.entities.Order;
+import com.SmartShop.SmartShop.entities.Payment;
 import com.SmartShop.SmartShop.mapper.OrderMapper;
+import com.SmartShop.SmartShop.mapper.PaymentMapper;
 import com.SmartShop.SmartShop.services.AuthorizationService;
 import com.SmartShop.SmartShop.services.OrderService;
+import com.SmartShop.SmartShop.services.PaymentService;
 import com.SmartShop.SmartShop.util.SecurityUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,8 @@ public class OrderController {
     private final OrderService orderService;
     private final OrderMapper orderMapper;
     private final AuthorizationService authorizationService;
+    private final PaymentService paymentService;
+    private final PaymentMapper paymentMapper;
 
     @PostMapping
     public ResponseEntity<OrderDTO.Response> createOrder(
@@ -92,5 +98,17 @@ public class OrderController {
 
         Order order = orderService.rejectOrder(id, "Rejeté par administrateur");
         return ResponseEntity.ok(orderMapper.toResponse(order));
+    }
+
+    @GetMapping("/{id}/payments")
+    public ResponseEntity<List<PaymentDTO.Response>> getOrderPayments(@PathVariable Long id) {
+        authorizationService.checkOrderAccess(id);
+
+        List<Payment> payments = paymentService.getPaymentsByOrderId(id);
+        List<PaymentDTO.Response> responses = payments.stream()
+                .map(paymentMapper::toResponse)
+                .collect(Collectors.toList());
+        
+        return ResponseEntity.ok(responses);
     }
 }
