@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "orders") // "order" est un mot réservé SQL, donc on met "orders"
+@Table(name = "orders")
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 
 public class Order {

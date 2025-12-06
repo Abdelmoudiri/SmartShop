@@ -29,6 +29,6 @@ public class User{
     @Column(nullable = false)
     private UserRole role;
 
-    @OneToOne(mappedBy = "user" , cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Client clientDetails;
 }
