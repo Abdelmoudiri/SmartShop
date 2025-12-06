@@ -2,6 +2,7 @@ package com.SmartShop.SmartShop.entities;
 
 
 import com.SmartShop.SmartShop.entities.enums.CustomerTier;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,18 +40,19 @@ public class Client {
     @Builder.Default
     private CustomerTier fidelite=CustomerTier.BASIC;
 
-    // Statistiques automatiques pour le système de fidélité
+
     @Column(nullable = false)
     @Builder.Default
-    private Integer totalOrders = 0; // Nombre total de commandes CONFIRMED
+    private Integer totalOrders = 0;
 
     @Column(nullable = false, precision = 12, scale = 2)
     @Builder.Default
-    private BigDecimal totalSpent = BigDecimal.ZERO; // Montant cumulé des commandes CONFIRMED
+    private BigDecimal totalSpent = BigDecimal.ZERO;
 
-    private LocalDateTime firstOrderDate; // Date de la première commande
+    private LocalDateTime firstOrderDate;
 
-    private LocalDateTime lastOrderDate; // Date de la dernière commande
+    private LocalDateTime lastOrderDate;
+
 
     @OneToMany(mappedBy = "client")
     private List<Order> orders;
